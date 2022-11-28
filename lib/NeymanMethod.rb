@@ -1,27 +1,29 @@
 require_relative 'probabilityDensFunc'
 
 class NeymanMethod
-  def calculate(x, sigma, mu)
-    x1 = 0
-    x2 = 0
-    while true
-      x1 = rand(x1)
-      x2 = rand(x2)
+  def calculate(generation_limit, sigma, mu)
+    generation_count = 0
+    success_generation_count = 0
 
-      x1 *= x
-      x2 *= maximum_value(sigma, mu)
+    max_value = maximum_value(sigma, mu)
 
-      if x2 <= probability_dens_func(sigma, mu, x1)
-        break
+    while generation_count < generation_limit
+      x = rand(0.0..1.0)
+      y = rand(0.0..1.0) * max_value
+
+      if probability_dens_func(sigma, mu, x) > y
+        success_generation_count += 1
       end
+
+      generation_count += 1
     end
 
-    x1
+    success_generation_count
   end
 
   private def maximum_value(sigma, mu)
-    moda = Math::E**(mu - sigma**2)
+    mode = Math::E**(mu - sigma**2)
 
-    probability_dens_func(sigma, mu, moda)
+    probability_dens_func(sigma, mu, mode)
   end
 end

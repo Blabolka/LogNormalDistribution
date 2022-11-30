@@ -1,22 +1,14 @@
-require_relative 'probabilityDensFunc'
+require_relative 'ProbabilityDensityFunction'
 
 class NeymanMethod
-  def calculate(right_boundary, sigma, mu)
-    max_value = maximum_value(sigma, mu)
-
+  def self.calculate(maximum_value, right_boundary, function_callback)
     while true
       x = rand(0.0..1.0) * right_boundary
-      y = rand(0.0..1.0) * max_value
+      y = rand(0.0..1.0) * maximum_value
 
-      if probability_dens_func(sigma, mu, x) > y
+      if function_callback.call(x) > y
         return x
       end
     end
-  end
-
-  private def maximum_value(sigma, mu)
-    mode = Math::E**(mu - sigma**2)
-
-    probability_dens_func(sigma, mu, mode)
   end
 end

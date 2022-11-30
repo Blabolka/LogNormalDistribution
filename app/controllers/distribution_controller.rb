@@ -1,6 +1,6 @@
+require_relative '../../lib/ProbabilityDensityFunction'
 require_relative '../../lib/GeneratorCore'
 require_relative '../../lib/NeymanMethod'
-require_relative '../../lib/probabilityDensFunc'
 
 class DistributionController < ApplicationController
   def index
@@ -18,8 +18,10 @@ class DistributionController < ApplicationController
 
       generator = GeneratorCore.new(max_x, step, generation_count)
 
-      neyman_method = NeymanMethod.new
-      neyman_method_lambda = -> () { neyman_method.calculate(max_x, sigma, mu) }
+      pdf_maximum_value = ProbabilityDensityFunction.maximum_value(sigma, mu)
+      pdf_calculation_lambda = -> (x) { ProbabilityDensityFunction.solve(sigma, mu, x) }
+      neyman_method_lambda = -> () { NeymanMethod.calculate(pdf_maximum_value, max_x, pdf_calculation_lambda) }
+
       @calculation_result = generator.generate(neyman_method_lambda)
     end
   end

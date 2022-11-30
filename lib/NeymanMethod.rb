@@ -1,24 +1,17 @@
 require_relative 'probabilityDensFunc'
 
 class NeymanMethod
-  def calculate(generation_limit, sigma, mu)
-    generation_count = 0
-    success_generation_count = 0
-
+  def calculate(right_boundary, sigma, mu)
     max_value = maximum_value(sigma, mu)
 
-    while generation_count < generation_limit
-      x = rand(0.0..1.0)
+    while true
+      x = rand(0.0..1.0) * right_boundary
       y = rand(0.0..1.0) * max_value
 
       if probability_dens_func(sigma, mu, x) > y
-        success_generation_count += 1
+        return x
       end
-
-      generation_count += 1
     end
-
-    success_generation_count
   end
 
   private def maximum_value(sigma, mu)

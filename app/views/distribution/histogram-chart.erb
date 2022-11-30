@@ -1,0 +1,33 @@
+<canvas id="distribution-histogram-chart"></canvas>
+
+<script>
+    function initializeChart() {
+        if (!window.calculationResult) return;
+
+        const chartElement = document.getElementById('distribution-histogram-chart');
+        new Chart(chartElement, {
+            type: 'bar',
+            data: {
+                labels: window.calculationResult.map((_, index) => (index * 0.1).toFixed(1)),
+                datasets: [{
+                    label: "Neyman",
+                    data: window.calculationResult,
+                    backgroundColor: "red",
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: "Frequency",
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    initializeChart();
+</script>

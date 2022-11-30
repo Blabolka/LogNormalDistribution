@@ -19,8 +19,9 @@ class DistributionController < ApplicationController
 
       generator = GeneratorCore.new(max_x, step, generation_count)
       pdf_calculation_lambda = -> (x) { ProbabilityDensityFunction.solve(sigma, mu, x) }
-
       pdf_maximum_value = ProbabilityDensityFunction.maximum_value(sigma, mu)
+      pdf_mean_value = ProbabilityDensityFunction.mean(sigma, mu);
+
       neyman_method_lambda = -> () { NeymanMethod.calculate(pdf_calculation_lambda, pdf_maximum_value, max_x) }
 
       previous_method_result = 0
@@ -34,6 +35,8 @@ class DistributionController < ApplicationController
         'options' => {
           'max_x' => max_x,
           'step' => step,
+          'pdf-max-value' => pdf_maximum_value,
+          'pdf-mean-value' => pdf_mean_value,
         },
         'neymanMethod' => generator.generate(neyman_method_lambda),
         'metropolisMethod' => generator.generate(metropolis_method_lambda)

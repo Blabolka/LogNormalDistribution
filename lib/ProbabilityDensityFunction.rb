@@ -4,8 +4,12 @@ class ProbabilityDensityFunction
   end
 
   def self.maximum_value(sigma, mu)
-    mode = Math::E**(mu - sigma**2)
+    mode = Math.exp(mu - sigma**2)
 
     ProbabilityDensityFunction.solve(sigma, mu, mode)
+  end
+
+  def self.mean(sigma, mu)
+    Math.exp(mu + (sigma**2 / 2.0))
   end
 end

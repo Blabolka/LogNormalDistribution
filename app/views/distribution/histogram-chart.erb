@@ -3,17 +3,28 @@
 <script>
     function initializeChart() {
         if (!window.calculationResult) return;
+        const xMaximumValue = window.calculationResult.options.max_x;
+        const stepValue = window.calculationResult.options.step;
 
         const chartElement = document.getElementById('distribution-histogram-chart');
+        const chartLabels = Array.from(Array(xMaximumValue / stepValue).keys()).map((_, index) => (index * 0.1).toFixed(1));
+
         new Chart(chartElement, {
             type: 'bar',
             data: {
-                labels: window.calculationResult.map((_, index) => (index * 0.1).toFixed(1)),
-                datasets: [{
-                    label: "Neyman",
-                    data: window.calculationResult,
-                    backgroundColor: "red",
-                }]
+                labels: chartLabels,
+                datasets: [
+                    {
+                        label: "Neyman",
+                        data: window.calculationResult.neymanMethod,
+                        backgroundColor: "#0066cc",
+                    },
+                    {
+                        label: "Metropolis",
+                        data: window.calculationResult.metropolisMethod,
+                        backgroundColor: "#ffcc00",
+                    }
+                ]
             },
             options: {
                 scales: {

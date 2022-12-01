@@ -44,6 +44,8 @@ class DistributionController < ApplicationController
 
       expected_value_calculation = MethodExpectedValueCalculation.new(generation_count, max_x)
       neyman_method_expected = expected_value_calculation.calculate(neyman_method_data)
+      metropolis_method_expected = expected_value_calculation.calculate(metropolis_method_data)
+      piecewise_method_expected = expected_value_calculation.calculate(piecewise_approximation_data)
 
       @calculation_result = {
         'options' => {
@@ -54,9 +56,11 @@ class DistributionController < ApplicationController
         'pdfMeanValue' => pdf_mean_value,
         'pdfVarianceValue' => pdf_variance_value,
         'neymanMethod' => neyman_method_data,
-        'neymanMethodExpectedValue' => neyman_method_expected,
         'metropolisMethod' => metropolis_method_data,
-        'piecewiseApproximationMethod' => piecewise_approximation_data
+        'piecewiseApproximationMethod' => piecewise_approximation_data,
+        'neymanMethodExpectedValue' => neyman_method_expected,
+        'metropolisMethodExpectedValue' => metropolis_method_expected,
+        'piecewiseMethodExpectedValue' => piecewise_method_expected,
       }
     end
   end

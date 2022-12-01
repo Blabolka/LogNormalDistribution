@@ -1,5 +1,3 @@
-require_relative 'ProbabilityDensityFunction'
-
 class NeymanMethod
   def self.calculate(function_callback, maximum_value, right_boundary)
     while true

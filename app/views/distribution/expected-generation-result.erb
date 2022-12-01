@@ -1,0 +1,30 @@
+<div id="expected-generation-result" class="d-flex flex-column pt-4 pl-2" style="visibility: hidden; font-size: 14px;">
+  <div id="analytic-expected-value">Expected value (analytic): </div>
+  <div id="variance-value" class="mb-4">Variance: </div>
+  <div id="neyman-expected-value">Expected value by neyman generation: </div>
+  <div id="metropolis-expected-value">Expected value by metropolis generation: </div>
+  <div id="piecewise-expected-value">Expected value by piecewise approximation generation: </div>
+</div>
+
+<script>
+  function fillExpectedValues() {
+      if (!window.calculationResult) return;
+      document.getElementById('expected-generation-result').style.visibility = 'visible';
+
+      const {
+          pdfVarianceValue,
+          pdfMeanValue: analyticExpectedValue,
+          neymanMethodExpectedValue,
+          metropolisMethodExpectedValue,
+          piecewiseMethodExpectedValue,
+      } = window.calculationResult;
+
+      document.getElementById('analytic-expected-value').textContent += analyticExpectedValue;
+      document.getElementById('variance-value').textContent += pdfVarianceValue;
+      document.getElementById('neyman-expected-value').textContent += neymanMethodExpectedValue;
+      document.getElementById('metropolis-expected-value').textContent += metropolisMethodExpectedValue;
+      document.getElementById('piecewise-expected-value').textContent += piecewiseMethodExpectedValue;
+  }
+
+  fillExpectedValues();
+</script>

@@ -1,3 +1,5 @@
+<%= render template: 'distribution/distribution-form/about-this-distribution' %>
+
 <div class="p-2">
   <form>
     <div class="input-group mb-2">
@@ -77,8 +79,17 @@
         required
       >
     </div>
-    <div class="d-flex justify-content-end">
-      <button type="submit" class="btn btn-primary">Calculate</button>
+    <div class="d-flex justify-content-between">
+      <div>
+        <!-- Button trigger "About this Distribution" modal -->
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#about-this-distribution-modal">
+          About
+        </button>
+      </div>
+      <div class="d-flex align-items-center" style="gap: 16px;">
+        <%= render template: 'distribution/distribution-form/export' %>
+        <button type="submit" class="btn btn-primary">Calculate</button>
+      </div>
     </div>
   </form>
 </div>

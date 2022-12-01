@@ -1,0 +1,71 @@
+<div class="btn-group" id="export-calculation-data" style="visibility: hidden">
+  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Export
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" id="export-as-json">JSON</a>
+    <a class="dropdown-item" id="export-as-xlsx">XLSX</a>
+  </div>
+</div>
+
+<script>
+    function initExport() {
+        if (!window.calculationResult) return;
+
+        const FILENAME_PREFIX = 'LogNormalDistributionDataExport';
+
+        const initExportJson = () => {
+            // Init export as JSON
+            document.getElementById('export-calculation-data').style.visibility = 'visible';
+            const jsonExportElement = document.getElementById('export-as-json');
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(window.calculationResult, null, 4));
+            jsonExportElement.setAttribute("href", dataStr);
+            jsonExportElement.setAttribute("download", `${FILENAME_PREFIX}.json`);
+        };
+
+        const initExportXlsx = () => {
+            const xlsxExportButton = document.getElementById('export-as-xlsx');
+            xlsxExportButton.addEventListener('click', () => {
+                const optionsInfo = [
+                    ["Generation count", window.calculationResult.options.generationCount],
+                    ["Right boundary", window.calculationResult.options.max_x],
+                    ["Sigma", window.calculationResult.options.sigma],
+                    ["Mu", window.calculationResult.options.mu],
+                    [''],
+                ];
+
+                const exportValuesInfo = [
+                    ['Expected value (analytic)', window.calculationResult.pdfMeanValue],
+                    ['Variance', window.calculationResult.pdfVarianceValue],
+                    ['Expected value by neyman generation', window.calculationResult.neymanMethodExpectedValue],
+                    ['Expected value by metropolis generation', window.calculationResult.metropolisMethodExpectedValue],
+                    ['Expected value by piecewise approximation generation', window.calculationResult.piecewiseMethodExpectedValue],
+                ];
+
+                const calculationResultByMethods = [
+                    ['Neyman method frequencies', ...window.calculationResult.neymanMethod],
+                    ['Metropolis method frequencies', ...window.calculationResult.metropolisMethod],
+                    ['Piecewise method frequencies', ...window.calculationResult.piecewiseApproximationMethod],
+                ];
+
+                const xlsxArrayData = [
+                    ...optionsInfo,
+                    ...exportValuesInfo,
+                    ...calculationResultByMethods,
+                ];
+
+                const SHEET_NAME = 'LogNormalDistributionData';
+                const XLSX = window.XLSX;
+                const wb = XLSX.utils.book_new();
+                wb.SheetNames.push(SHEET_NAME);
+                wb.Sheets[SHEET_NAME] = XLSX.utils.aoa_to_sheet(xlsxArrayData);
+                XLSX.writeFile(wb, `${FILENAME_PREFIX}.xlsx`);
+            });
+        };
+
+        initExportJson();
+        initExportXlsx();
+    }
+
+    initExport();
+</script>

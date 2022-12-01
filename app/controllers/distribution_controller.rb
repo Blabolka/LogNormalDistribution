@@ -49,8 +49,11 @@ class DistributionController < ApplicationController
 
       @calculation_result = {
         'options' => {
+          'generationCount' => generation_count,
           'max_x' => max_x,
           'step' => step,
+          'sigma' => sigma,
+          'mu' => mu
         },
         'pdfMaxValue' => pdf_maximum_value,
         'pdfMeanValue' => pdf_mean_value,

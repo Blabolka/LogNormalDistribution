@@ -5,8 +5,12 @@ class MetropolisMethod
     delta = (1.0/3.0) * right_boundary
     x1 = previous_x + delta * (-1.0 + 2.0 * gamma1)
 
+    if x1 < 0 || x1 > right_boundary
+      return previous_x
+    end
+
     previous_x_calculation = function_callback.call(previous_x)
-    alpha = function_callback.call(x1) / (previous_x_calculation === 0 ? 1 : previous_x_calculation)
+    alpha = function_callback.call(x1) / previous_x_calculation
 
     if alpha >= 1.0 || alpha > gamma2
       return x1

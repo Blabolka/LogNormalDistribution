@@ -1,13 +1,19 @@
 <div id="expected-generation-result" class="d-flex flex-column pt-4 pl-2" style="visibility: hidden; font-size: 14px;">
   <div id="analytic-expected-value">Expected value (analytic): </div>
-  <div id="variance-value" class="mb-4">Variance: </div>
+  <div id="analytic-variance-value" class="mb-4">Variance: </div>
+
   <div id="neyman-expected-value">Expected value by neyman generation: </div>
+  <div id="neyman-variance-value" class="mb-4">Variance: </div>
+
   <div id="metropolis-expected-value">Expected value by metropolis generation: </div>
+  <div id="metropolis-variance-value" class="mb-4">Variance: </div>
+
   <div id="piecewise-expected-value">Expected value by piecewise approximation generation: </div>
+  <div id="piecewise-variance-value" class="mb-4">Variance: </div>
 </div>
 
 <script>
-  function fillExpectedValues() {
+  function fillGenerationResults() {
       if (!window.calculationResult) return;
       document.getElementById('expected-generation-result').style.visibility = 'visible';
 
@@ -15,16 +21,26 @@
           pdfVarianceValue,
           pdfMeanValue: analyticExpectedValue,
           neymanMethodExpectedValue,
+          neymanMethodVariance,
           metropolisMethodExpectedValue,
+          metropolisMethodVariance,
           piecewiseMethodExpectedValue,
+          piecewiseMethodVariance,
       } = window.calculationResult;
 
       document.getElementById('analytic-expected-value').textContent += analyticExpectedValue;
-      document.getElementById('variance-value').textContent += pdfVarianceValue;
+      document.getElementById('analytic-variance-value').textContent += pdfVarianceValue;
+
       document.getElementById('neyman-expected-value').textContent += neymanMethodExpectedValue;
+      document.getElementById('neyman-variance-value').textContent += neymanMethodVariance;
+
       document.getElementById('metropolis-expected-value').textContent += metropolisMethodExpectedValue;
+      document.getElementById('metropolis-variance-value').textContent += metropolisMethodVariance;
+
       document.getElementById('piecewise-expected-value').textContent += piecewiseMethodExpectedValue;
+      document.getElementById('piecewise-variance-value').textContent += piecewiseMethodVariance;
+
   }
 
-  fillExpectedValues();
+  fillGenerationResults();
 </script>

@@ -7,7 +7,7 @@
         const stepValue = window.calculationResult.options.step;
 
         const chartElement = document.getElementById('distribution-histogram-chart');
-        const chartLabels = Array.from(Array(xMaximumValue / stepValue).keys()).map((_, index) => (index * 0.1).toFixed(1));
+        const chartLabels = Array.from(Array(xMaximumValue / stepValue).keys()).map((_, index) => (index * stepValue).toFixed(1));
 
         new Chart(chartElement, {
             type: 'bar',

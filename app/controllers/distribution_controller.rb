@@ -3,7 +3,7 @@ require_relative '../../lib/GeneratorCore'
 require_relative '../../lib/NeymanMethod'
 require_relative '../../lib/MetropolisMethod'
 require_relative '../../lib/PiecewiseApproximationMethod'
-require_relative '../../lib/MethodExpectedValueCalculation'
+require_relative '../../lib/MethodCalculationUtils'
 
 class DistributionController < ApplicationController
   def index
@@ -49,10 +49,36 @@ class DistributionController < ApplicationController
     metropolis_method_data = generator.generate(metropolis_method_lambda)
     piecewise_approximation_data = generator.generate(piecewise_approximation_lambda)
 
-    expected_value_calculation = MethodExpectedValueCalculation.new(generation_count, max_x)
-    neyman_method_expected = expected_value_calculation.calculate(neyman_method_data)
-    metropolis_method_expected = expected_value_calculation.calculate(metropolis_method_data)
-    piecewise_method_expected = expected_value_calculation.calculate(piecewise_approximation_data)
+    methods_calculation = MethodCalculationUtils.new
+
+    neyman_method_expected = methods_calculation.get_mean(
+      neyman_method_data['count'],
+      neyman_method_data['sum'],
+    )
+    metropolis_method_expected = methods_calculation.get_mean(
+      metropolis_method_data['count'],
+      metropolis_method_data['sum'],
+    )
+    piecewise_method_expected = methods_calculation.get_mean(
+      piecewise_approximation_data['count'],
+      piecewise_approximation_data['sum'],
+    )
+
+    neyman_method_variance = methods_calculation.get_variance(
+      neyman_method_data['count'],
+      neyman_method_data['sum'],
+      neyman_method_data['sum_squares'],
+    )
+    metropolis_method_variance = methods_calculation.get_variance(
+      metropolis_method_data['count'],
+      metropolis_method_data['sum'],
+      metropolis_method_data['sum_squares'],
+    )
+    piecewise_method_variance = methods_calculation.get_variance(
+      piecewise_approximation_data['count'],
+      piecewise_approximation_data['sum'],
+      piecewise_approximation_data['sum_squares'],
+    )
 
     @calculation_result = {
       'options' => {
@@ -65,12 +91,15 @@ class DistributionController < ApplicationController
       'pdfMaxValue' => pdf_maximum_value,
       'pdfMeanValue' => pdf_mean_value,
       'pdfVarianceValue' => pdf_variance_value,
-      'neymanMethod' => neyman_method_data,
-      'metropolisMethod' => metropolis_method_data,
-      'piecewiseApproximationMethod' => piecewise_approximation_data,
+      'neymanMethod' => neyman_method_data['frequencies'],
+      'metropolisMethod' => metropolis_method_data['frequencies'],
+      'piecewiseApproximationMethod' => piecewise_approximation_data['frequencies'],
       'neymanMethodExpectedValue' => neyman_method_expected,
       'metropolisMethodExpectedValue' => metropolis_method_expected,
       'piecewiseMethodExpectedValue' => piecewise_method_expected,
+      'neymanMethodVariance' => neyman_method_variance,
+      'metropolisMethodVariance' => metropolis_method_variance,
+      'piecewiseMethodVariance' => piecewise_method_variance,
     }
   end
 end

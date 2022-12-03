@@ -36,18 +36,25 @@
                 ];
 
                 const exportValuesInfo = [
-                    ['Expected value (analytic)', window.calculationResult.pdfMeanValue],
-                    ['Analytic variance', window.calculationResult.pdfVarianceValue],
-                    ['Expected value by neyman generation', window.calculationResult.neymanMethodExpectedValue],
-                    ['Neyman variance', window.calculationResult.neymanMethodVariance],
-                    ['Expected value by metropolis generation', window.calculationResult.metropolisMethodExpectedValue],
-                    ['Metropolis variance', window.calculationResult.metropolisMethodVariance],
-                    ['Expected value by piecewise approximation generation', window.calculationResult.piecewiseMethodExpectedValue],
-                    ['Piecewise approximation variance', window.calculationResult.piecewiseMethodVariance],
+                    ['Mode (analytic)', window.calculationResult.pdfMeanValue],
+                    ['Variance (analytic)', window.calculationResult.pdfVarianceValue],
+                    [''],
+                    ['Mode (Neumann)', window.calculationResult.neumannMethodExpectedValue],
+                    ['Variance (Neumann)', window.calculationResult.neumannMethodVariance],
+                    ['Deviation (Neumann)', window.calculationResult.neumannMethodDeviation],
+                    [''],
+                    ['Mode (Metropolis)', window.calculationResult.metropolisMethodExpectedValue],
+                    ['Variance (Metropolis)', window.calculationResult.metropolisMethodVariance],
+                    ['Deviation (Metropolis)', window.calculationResult.metropolisMethodDeviation],
+                    [''],
+                    ['Mode (Piecewise Approximation)', window.calculationResult.piecewiseMethodExpectedValue],
+                    ['Variance (Piecewise Approximation)', window.calculationResult.piecewiseMethodVariance],
+                    ['Deviation (Piecewise Approximation)', window.calculationResult.piecewiseMethodDeviation],
+                    [''],
                 ];
 
                 const calculationResultByMethods = [
-                    ['Neyman method frequencies', ...window.calculationResult.neymanMethod],
+                    ['Neumann method frequencies', ...window.calculationResult.neumannMethod],
                     ['Metropolis method frequencies', ...window.calculationResult.metropolisMethod],
                     ['Piecewise method frequencies', ...window.calculationResult.piecewiseApproximationMethod],
                 ];

@@ -5,9 +5,12 @@ class GeneratorCore
     @step = step
   end
 
+  def get_total_generations_count
+    (@limit.to_f / @step) * @generation_count
+  end
+
   def generate(method)
     frequencies = []
-    count = 0
     sum = 0
     sum_squares = 0
 
@@ -17,7 +20,6 @@ class GeneratorCore
 
       (0..@generation_count).each do
         method_result = method.call
-        count += 1
         sum += method_result
         sum_squares += method_result**2
 
@@ -31,7 +33,6 @@ class GeneratorCore
 
     {
       'frequencies' => frequencies,
-      'count' => count,
       'sum' => sum,
       'sum_squares' => sum_squares,
     }

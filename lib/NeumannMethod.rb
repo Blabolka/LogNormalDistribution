@@ -1,4 +1,4 @@
-class NeymanMethod
+class NeumannMethod
   def self.calculate(function_callback, maximum_value, right_boundary)
     while true
       x = rand(0.0..1.0) * right_boundary

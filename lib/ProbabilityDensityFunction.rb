@@ -19,4 +19,8 @@ class ProbabilityDensityFunction
   def self.variance(sigma, mu)
     (Math.exp(sigma**2) - 1) * Math.exp(2*mu + sigma**2)
   end
+
+  def self.deviation(sigma, mu, generation_count)
+
+  end
 end

@@ -8,14 +8,12 @@
       </div>
       <input
         type="number"
-        min="0"
+        min="1"
         class="form-control"
         name="generation-count"
         id="generation-count-distribution-input"
         placeholder="Enter generation count value"
-        oninvalid="Number(this.value) < 0
-          ? this.setCustomValidity('Generation count should be greater than Zero')
-          : this.setCustomValidity('Generation count is required field')"
+        oninvalid="validate(this, 1)"
         oninput="this.setCustomValidity('')"
         required
       >
@@ -27,14 +25,13 @@
       </div>
       <input
         type="number"
-        min="0"
+        min="0.01"
         class="form-control"
         name="right-boundary"
+        step="0.01"
         id="right-boundary-distribution-input"
         placeholder="Enter right boundary of calculation"
-        oninvalid="Number(this.value) < 0
-          ? this.setCustomValidity('Right boundary of calculation should be greater than Zero')
-          : this.setCustomValidity('Right boundary of calculation is required field')"
+        oninvalid="validate(this, 0.01)"
         oninput="this.setCustomValidity('')"
         required
       >
@@ -46,15 +43,13 @@
       </div>
       <input
         type="number"
-        min="0"
+        min="0.01"
         class="form-control"
         name="sigma"
         id="sigma-distribution-input"
         placeholder="Enter the sigma value"
         step="0.01"
-        oninvalid="Number(this.value) < 0
-          ? this.setCustomValidity('Sigma value should be greater than Zero')
-          :this.setCustomValidity('Sigma value is required field')"
+        oninvalid="validate(this, 0.01)"
         oninput="this.setCustomValidity('')"
         required
       >
@@ -66,7 +61,6 @@
       </div>
       <input
         type="number"
-        min="0"
         class="form-control"
         name="mu"
         id="mu-distribution-input"
@@ -95,6 +89,12 @@
 </div>
 
 <script>
+    function validate(input, minExpectedValue) {
+        if (Number(input.value) < minExpectedValue) {
+            input.setCustomValidity(`Generation count should be greater than ${minExpectedValue}`);
+        }
+    }
+
     function fillForm() {
         const params = (new URL(document.location)).searchParams;
 
@@ -104,7 +104,7 @@
         const mu = params.get("mu");
 
         document.getElementById('generation-count-distribution-input').value = generationCount ? Number(generationCount) : 100000;
-        document.getElementById('right-boundary-distribution-input').value = rightBoundary ? Number(rightBoundary) : 2;
+        document.getElementById('right-boundary-distribution-input').value = rightBoundary ? Number(rightBoundary) : 3;
         document.getElementById('sigma-distribution-input').value = sigma ? Number(sigma) : 0.25;
         document.getElementById('mu-distribution-input').value = mu ? Number(mu) : 0;
     }

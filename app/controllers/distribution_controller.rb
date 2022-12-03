@@ -108,6 +108,7 @@ class DistributionController < ApplicationController
         'mu' => mu
       },
       'pdfMaxValue' => pdf_maximum_value,
+      'pdfModeValue' => pdf_mode_value,
       'pdfMeanValue' => pdf_mean_value,
       'pdfVarianceValue' => pdf_variance_value,
       'pdfDeviationValue' => pdf_deviation_value,

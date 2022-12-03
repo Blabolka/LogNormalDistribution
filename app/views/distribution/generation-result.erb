@@ -22,8 +22,8 @@
       document.getElementById('expected-generation-result').style.visibility = 'visible';
 
       const {
+          pdfMeanValue,
           pdfVarianceValue,
-          pdfMeanValue: analyticExpectedValue,
           pdfDeviationValue,
           neumannMethodExpectedValue,
           neumannMethodVariance,
@@ -36,7 +36,7 @@
           piecewiseMethodDeviation,
       } = window.calculationResult;
 
-      document.getElementById('analytic-expected-value').textContent += analyticExpectedValue;
+      document.getElementById('analytic-expected-value').textContent += pdfMeanValue;
       document.getElementById('analytic-variance-value').textContent += pdfVarianceValue;
       document.getElementById('analytic-deviation-value').textContent += pdfDeviationValue;
 

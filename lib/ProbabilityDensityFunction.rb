@@ -21,6 +21,7 @@ class ProbabilityDensityFunction
   end
 
   def self.deviation(sigma, mu, generation_count)
-
+    variance = ProbabilityDensityFunction.variance(sigma, mu)
+    Math.sqrt(variance / generation_count)
   end
 end
